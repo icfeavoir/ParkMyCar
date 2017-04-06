@@ -7,4 +7,5 @@
     <string name="notification">Notification PARK MY CAR</string>
     <string name="notification_title">Ma première notification</string>
     <string name="notification_desc">Cliquez sur moi je suis une notification !</string>
+    <string name="title_activity_search_view_pmc">SearchViewPMC</string>
 </resources>

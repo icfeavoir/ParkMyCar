@@ -65,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button searchView = (Button) findViewById(R.id.button_searchView);
+        searchView.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //change view
+                Intent intentMain = new Intent(MainActivity.this, SearchViewPMC.class);
+                startActivity(intentMain);
+            }
+        });
+
         Button pseudo = (Button) findViewById(R.id.save);
         pseudo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -142,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
             text.setText("Erreur :(");
         }
     }
-
 
     private class AsyncData extends AsyncTask<Void, Void, String> {
 

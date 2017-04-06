@@ -16,7 +16,8 @@
         android:text="Récuparation des données"
         android:id="@+id/button_connection"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,7 +39,8 @@
         android:id="@+id/save"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp" />
+        android:layout_marginBottom="35dp"
+        android:layout_margin="10dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -49,7 +51,8 @@
         android:layout_alignRight="@+id/save"
         android:layout_alignEnd="@+id/save"
         android:layout_alignLeft="@+id/save"
-        android:layout_alignStart="@+id/save" />
+        android:layout_alignStart="@+id/save"
+        android:layout_margin="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,7 +61,8 @@
         android:text="Pseudo"
         android:id="@+id/textView"
         android:layout_above="@+id/pseudoField"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,8 +70,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Inconnu"
         android:id="@+id/pseudoMem"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/save"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -76,6 +81,23 @@
         android:text="Change view Notif"
         android:id="@+id/button_notifView"
         android:layout_below="@+id/data"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignRight="@+id/button_searchView"
+        android:layout_alignEnd="@+id/button_searchView"
+        android:layout_alignLeft="@+id/button_searchView"
+        android:layout_alignStart="@+id/button_searchView" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search View"
+        android:id="@+id/button_searchView"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/button_connection"
+        android:layout_alignStart="@+id/button_connection"
+        android:layout_alignRight="@+id/button_connection"
+        android:layout_alignEnd="@+id/button_connection" />
 
 </RelativeLayout>

@@ -65,10 +65,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     builder.include(m.getPosition());
                 }
                 // animation pour zoomer en contenant tous les markers
-                LatLngBounds bounds = builder.build();
-                int padding = 500;
-                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                mMap.animateCamera(cu);
+                if(listeCapteurs.size() != 0) {
+                    LatLngBounds bounds = builder.build();
+                    int padding = 500;
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                    mMap.animateCamera(cu);
+                }
             }
         });
     }

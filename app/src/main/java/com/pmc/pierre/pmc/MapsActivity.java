@@ -2,18 +2,25 @@ package com.pmc.pierre.pmc;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
+    private PMCSearch pmc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +42,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * installed Google Play services and returned to the app.
      */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        double[] angersEseo = new double[]{47.495734, -0.554493};
-        LatLng sydney = new LatLng(angersEseo[0], angersEseo[1]);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("ESEO"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        Button search = (Button) findViewById(R.id.search_button);
+        search.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //on enlève tous les marqueurs
+                mMap.clear();
+                // on effectue la recherche des capteurs dispo
+                pmc = new PMCSearch();
+                pmc.getDataFromDB();
+                List<Capteur> listeCapteurs = pmc.getListeCapteur();
+
+                //pour la map
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                for(int i=0; i<listeCapteurs.size(); i++){
+                    Capteur c = listeCapteurs.get(i);
+                    LatLng capteur = new LatLng(c.getLat(), c.getLon());
+                    Marker m = mMap.addMarker(new MarkerOptions().position(capteur).title("Capteur "+(i+1)));
+
+                    builder.include(m.getPosition());
+                }
+                // animation pour zoomer en contenant tous les markers
+                LatLngBounds bounds = builder.build();
+                int padding = 500;
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                mMap.animateCamera(cu);
+            }
+        });
     }
 }

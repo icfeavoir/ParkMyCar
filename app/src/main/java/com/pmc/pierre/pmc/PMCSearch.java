@@ -1,14 +1,14 @@
 package com.pmc.pierre.pmc;
 
 import android.os.AsyncTask;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,32 +75,34 @@ public class PMCSearch {
 
         @Override
         protected String doInBackground(Void... args){
-            URL url;
-            String res;
+            BufferedReader reader = null;
+            StringBuilder sb = null;
             try {
-                url = new URL("http://ajc-courcite.fr/pmc/getData.php");
+                String data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode("pmc", "UTF-8");
+                data += "&" + URLEncoder.encode("passwd", "UTF-8") + "=" + URLEncoder.encode("pmc_user", "UTF-8");
 
-                BufferedInputStream bis = new BufferedInputStream(url.openStream());
-                byte[] buffer = new byte[1024];
-                StringBuilder sb = new StringBuilder();
-                int bytesRead = 0;
-                //append each line of result in the StringBuilder (better than concat)
-                while((bytesRead = bis.read(buffer)) > 0) {
-                    String text = new String(buffer, 0, bytesRead);
-                    sb.append(text);
+                URL url = new URL("http://ajc-courcite.fr/pmc/getData.php");
+                URLConnection conn = url.openConnection();
+                conn.setDoOutput(true);
+
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                wr.write(data);
+                wr.flush();
+
+                //response
+                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                sb = new StringBuilder();
+                String line = null;
+
+                while((line = reader.readLine()) != null){
+                    sb.append(line);
                 }
-                bis.close();
-                res = sb.toString();
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                res = "Err1";
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                res = "Err2";
-            } catch(Exception e){
-                res = "Err3";
+
+            }catch(Exception e){
+                e.printStackTrace();
             }
-            return res;
+
+            return sb.toString();
         }
     }
 }

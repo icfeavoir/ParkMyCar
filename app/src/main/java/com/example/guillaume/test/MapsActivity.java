@@ -54,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onPlaceSelected(Place place) {
         if (marker != null){
-            marker.remove();
+            marker.remove(); //test
         }
         MapsActivity.this.location =  place.getLatLng();
         Log.i("¨Place_auto", "Place: " + place.getName());
